@@ -8,15 +8,12 @@
 import SwiftUI
 
 struct LoginView: View{
+    @Binding var isLoggedIn : Bool
     @State private var username: String = ""
     @State private var password: String = ""
-    @State private var showMainView: Bool = false
     @State private var showError: Bool = false
     
     var body: some View{
-        if showMainView{
-            MainView()
-        }else{
             VStack (spacing:20){
                 Text("Login to Tune")
                     .italic()
@@ -68,12 +65,12 @@ struct LoginView: View{
             }
             .padding()
         }
-    }
         
-    func handleLogin(){
+    func handleLogin() {
         if username == "admin" && password == "password" {
-            showMainView = true
-        } else{
+            isLoggedIn = true
+            UserDefaults.standard.set(true, forKey: "isLoggedIn")
+        } else {
             showError = true
         }
     }
@@ -81,6 +78,6 @@ struct LoginView: View{
 
 struct LoginView_previews: PreviewProvider {
     static var previews: some View{
-        LoginView()
+        LoginView(isLoggedIn: .constant(false))
     }
 }

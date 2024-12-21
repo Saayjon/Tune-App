@@ -9,9 +9,25 @@ import SwiftUI
 
 @main
 struct TuneApp: App {
+    @State private var isLoggedIn = UserDefaults.standard.bool(forKey: "isLoggedIn")
+    @State private var showLoadingScreen = true
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            if showLoadingScreen{
+                ContentView(isLoggedIn: $isLoggedIn)
+                    .onAppear{
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 2){
+                            showLoadingScreen = false
+                        }
+                    }
+            }else{
+                if isLoggedIn{
+                    MainView()
+                } else{
+                    LoginView(isLoggedIn: $isLoggedIn)
+                }
+            }
         }
     }
 }

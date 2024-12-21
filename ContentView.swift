@@ -8,12 +8,17 @@
 import SwiftUI
 
 struct ContentView : View {
+    @Binding var isLoggedIn: Bool
     @State private var showNextView = false
     
     var body : some View{
         Group{
             if showNextView{
-                LoginView()
+                if isLoggedIn{
+                    MainView()
+                }else{
+                    LoginView(isLoggedIn: $isLoggedIn)
+                }
             }else{
                 VStack {
                     Text ("Tune")
@@ -34,8 +39,8 @@ struct ContentView : View {
     }
 }
 
-struct ContentView_previews : PreviewProvider{
-    static var previews: some View{
-        ContentView()
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        ContentView(isLoggedIn: .constant(false)) 
     }
 }

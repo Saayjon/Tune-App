@@ -1,32 +1,24 @@
-//
-//  MainView.swift
-//  Tune
-//
-//  Created by Saayjon Ranjan on 2024-12-19.
-//
-
-import Foundation
 import SwiftUI
 
 struct MainView: View {
     @State private var songName: String = ""
     @State private var showProfileView: Bool = false
-    
-    var body: some View{
-        NavigationView{
-            VStack(spacing:20){
+
+    var body: some View {
+        NavigationStack {
+            VStack(spacing: 20) {
                 Text("Welcome to Tune")
                     .font(.largeTitle)
                     .bold()
                     .padding()
                 Text("Share Your Song of the Day!")
                     .font(.headline)
-                
-                TextField("Enter Song Name" , text: $songName)
+
+                TextField("Enter Song Name", text: $songName)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .padding(.horizontal)
-                
-                Button(action: shareSong){
+
+                Button(action: shareSong) {
                     Text("Share Song")
                         .bold()
                         .frame(maxWidth: .infinity)
@@ -36,45 +28,37 @@ struct MainView: View {
                         .cornerRadius(10)
                 }
                 .padding(.horizontal)
-                
+
                 Spacer()
-                
-                NavigationLink(destination: ProfileView(), isActive: $showProfileView){
-                    EmptyView()
-                }
-                
-                HStack{
+
+                HStack {
                     Spacer()
-                    Button(action: {
-                        showProfileView = true
-                    }){
+                    NavigationLink(value: "profile") {
                         Image(systemName: "person.circle")
                             .resizable()
                             .frame(width: 60, height: 60)
                             .foregroundColor(.blue)
                             .shadow(radius: 5)
                     }
+                    .navigationDestination(for: String.self) { value in
+                        if value == "profile" {
+                            ProfileView()
+                        }
+                    }
                     .padding()
                 }
-                
             }
             .padding()
-            .navigationTitle("Main")
-            .navigationDestination(for: String.self){ value in
-                if value == "Profile"{
-                    ProfileView()
-                }
-            }
         }
     }
-    func shareSong(){
+
+    func shareSong() {
         print("Shared song: \(songName)")
     }
 }
 
-
-struct MainView_previews: PreviewProvider{
-    static var previews: some View{
+struct MainView_Previews: PreviewProvider {
+    static var previews: some View {
         MainView()
     }
 }
