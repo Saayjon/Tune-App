@@ -1,8 +1,9 @@
 import SwiftUI
 
 struct MainView: View {
+    @Binding var isLoggedIn: Bool
     @State private var songName: String = ""
-    @State private var showProfileView: Bool = false
+    //@State private var showProfileView: Bool = false
 
     var body: some View {
         NavigationStack {
@@ -42,7 +43,7 @@ struct MainView: View {
                     }
                     .navigationDestination(for: String.self) { value in
                         if value == "profile" {
-                            ProfileView()
+                            ProfileView(isLoggedIn: $isLoggedIn)
                         }
                     }
                     .padding()
@@ -59,6 +60,6 @@ struct MainView: View {
 
 struct MainView_Previews: PreviewProvider {
     static var previews: some View {
-        MainView()
+        MainView(isLoggedIn: .constant(true))
     }
 }

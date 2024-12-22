@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 
 struct ProfileView: View{
+    @Binding var isLoggedIn: Bool
     var body: some View{
         VStack{
             Text("Profile")
@@ -20,9 +21,23 @@ struct ProfileView: View{
                 .padding()
             
             Spacer()
+            
+            Button(action: {
+                isLoggedIn = false
+                UserDefaults.standard.set(false, forKey: "isLoggedIn")
+            }){
+                Text("Logout")
+                    .bold()
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .background(Color.red)
+                    .foregroundColor(.white)
+                    .cornerRadius(10)
+            }
+            .padding(.horizontal)
+            .padding(.bottom,20)
         }
-        .navigationTitle("Profile")
-        .navigationBarTitleDisplayMode(.inline)
+        .padding()
     }
 }
 
@@ -34,6 +49,6 @@ struct ProfileView: View{
 
 struct ProfileView_Previews: PreviewProvider{
     static var previews: some View{
-        ProfileView()
+        ProfileView(isLoggedIn: .constant(true))
     }
 }

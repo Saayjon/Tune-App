@@ -23,7 +23,7 @@ struct TuneApp: App {
                     }
             }else{
                 if isLoggedIn{
-                    MainView()
+                    MainView(isLoggedIn : $isLoggedIn)
                 } else{
                     LoginView(isLoggedIn: $isLoggedIn)
                 }

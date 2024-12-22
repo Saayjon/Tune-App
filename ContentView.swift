@@ -15,7 +15,7 @@ struct ContentView : View {
         Group{
             if showNextView{
                 if isLoggedIn{
-                    MainView()
+                    MainView(isLoggedIn: $isLoggedIn)
                 }else{
                     LoginView(isLoggedIn: $isLoggedIn)
                 }
